@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Endereco implements Serializable{
 	private static final long serialVersionUID = 4353287853148975967L;
@@ -23,6 +25,8 @@ public class Endereco implements Serializable{
 	
 	@ManyToOne
 	private Cidade cidade;
+	
+	@JsonBackReference
 	@ManyToOne
 	private Cliente cliente;
 

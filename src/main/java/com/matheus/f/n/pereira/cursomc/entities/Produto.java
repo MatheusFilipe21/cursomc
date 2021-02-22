@@ -1,27 +1,43 @@
-package com.matheus.f.n.pereira.cursomc.domain;
+package com.matheus.f.n.pereira.cursomc.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Categoria implements Serializable{
-	private static final long serialVersionUID = 2740031729378943141L;
+public class Produto implements Serializable{
+	private static final long serialVersionUID = -2745586848942010008L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Double preco;
 	
-	public Categoria() {
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable(name = "produto_categoria",
+	joinColumns = @JoinColumn(name = "produto_id"),
+	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private List<Categoria> categorias = new ArrayList<>();
+	
+	public Produto() {
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Produto(Integer id, String nome, Double preco) {
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 
 	public Integer getId() {
@@ -40,6 +56,18 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -56,7 +84,7 @@ public class Categoria implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -64,5 +92,5 @@ public class Categoria implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }

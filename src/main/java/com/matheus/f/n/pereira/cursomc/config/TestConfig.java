@@ -1,5 +1,6 @@
 package com.matheus.f.n.pereira.cursomc.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.matheus.f.n.pereira.cursomc.entities.Cidade;
 import com.matheus.f.n.pereira.cursomc.entities.Cliente;
 import com.matheus.f.n.pereira.cursomc.entities.Endereco;
 import com.matheus.f.n.pereira.cursomc.entities.Estado;
+import com.matheus.f.n.pereira.cursomc.entities.Pagamento;
+import com.matheus.f.n.pereira.cursomc.entities.PagamentoComBoleto;
+import com.matheus.f.n.pereira.cursomc.entities.PagamentoComCartao;
+import com.matheus.f.n.pereira.cursomc.entities.Pedido;
 import com.matheus.f.n.pereira.cursomc.entities.Produto;
+import com.matheus.f.n.pereira.cursomc.entities.enums.EstadoPagamento;
 import com.matheus.f.n.pereira.cursomc.entities.enums.TipoCliente;
 import com.matheus.f.n.pereira.cursomc.repositories.CategoriaRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.CidadeRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.ClienteRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.EnderecoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.EstadoRepository;
+import com.matheus.f.n.pereira.cursomc.repositories.PagamentoRepository;
+import com.matheus.f.n.pereira.cursomc.repositories.PedidoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.ProdutoRepository;
 
 @Configuration
@@ -27,22 +35,28 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
+	@Autowired
+	private PedidoRepository pedidoRepository;
+
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -85,6 +99,22 @@ public class TestConfig implements CommandLineRunner {
 		
 		clienteRepository.save(cli1);
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 	}
 
 }

@@ -23,7 +23,6 @@ public class PedidoService {
 	public Pedido findById(Integer id) {
 		Optional<Pedido> obj = repository.findById(id);
 		return obj.orElseThrow(
-				() -> new ObjectNotFoundException("Objeto não encontrado! Na nossa base de dados não existe nenhum "
-						+ Pedido.class.getSimpleName() + " com o Id: " + id));
+				() -> new ObjectNotFoundException(Pedido.class.getSimpleName(), id));
 	}
 }

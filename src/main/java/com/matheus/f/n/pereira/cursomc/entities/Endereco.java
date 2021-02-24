@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Endereco implements Serializable{
@@ -26,7 +26,7 @@ public class Endereco implements Serializable{
 	@ManyToOne
 	private Cidade cidade;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	private Cliente cliente;
 

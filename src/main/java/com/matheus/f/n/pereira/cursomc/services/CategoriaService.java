@@ -8,6 +8,9 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.matheus.f.n.pereira.cursomc.entities.Categoria;
@@ -53,6 +56,11 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Não é possível excluir uma " + Categoria.class.getSimpleName() + " que possui Produtos");
 		}
+	}
+	
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		 PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		 return repository.findAll(pageRequest);
 	}
 
 	private void updatedata(Categoria entity, Categoria obj) {

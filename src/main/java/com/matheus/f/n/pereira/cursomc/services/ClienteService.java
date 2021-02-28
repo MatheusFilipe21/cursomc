@@ -68,7 +68,7 @@ public class ClienteService {
 			throw new ObjectNotFoundException(Cliente.class.getSimpleName(), id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException(
-					"Não é possível excluir um " + Cliente.class.getSimpleName() + " que possui Produtos");
+					"Não é possível excluir um " + Cliente.class.getSimpleName() + " que possui Pedidos");
 		}
 	}
 

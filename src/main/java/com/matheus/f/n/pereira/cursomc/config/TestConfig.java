@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -30,6 +31,8 @@ import com.matheus.f.n.pereira.cursomc.repositories.ItemPedidoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.PagamentoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.PedidoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.ProdutoRepository;
+import com.matheus.f.n.pereira.cursomc.services.EmailService;
+import com.matheus.f.n.pereira.cursomc.services.MockEmailService;
 
 @Configuration
 @Profile("test")
@@ -61,6 +64,11 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
+	}
 
 	@Override
 	public void run(String... args) throws Exception {

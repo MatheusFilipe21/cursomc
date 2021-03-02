@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.matheus.f.n.pereira.cursomc.entities.PagamentoComBoleto;
 
 @Service
-public class boletoService {
+public class BoletoService {
 
 	public void preencherPagamentoComBoleto(PagamentoComBoleto pagto, Date instanteDoPedido) {
 		Calendar cal = Calendar.getInstance();

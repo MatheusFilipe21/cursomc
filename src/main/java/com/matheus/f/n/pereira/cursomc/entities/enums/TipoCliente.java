@@ -21,9 +21,13 @@ public enum TipoCliente {
 		return descricao;
 	}
 
-	public static TipoCliente valueOf(int cod) {
+	public static TipoCliente valueOf(Integer cod) {
+		if (cod == null) {
+			return null;
+		}
+		
 		for (TipoCliente value : TipoCliente.values()) {
-			if (value.getCod() == cod) {
+			if (cod.equals(value.getCod())) {
 				return value;
 			}
 		}

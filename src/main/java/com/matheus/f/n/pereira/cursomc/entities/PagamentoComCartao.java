@@ -2,9 +2,11 @@ package com.matheus.f.n.pereira.cursomc.entities;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.matheus.f.n.pereira.cursomc.entities.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 	private static final long serialVersionUID = 3266207508637410631L;
 	

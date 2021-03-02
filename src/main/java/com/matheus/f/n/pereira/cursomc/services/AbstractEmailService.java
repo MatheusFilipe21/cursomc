@@ -20,7 +20,7 @@ public abstract class AbstractEmailService implements EmailService {
 
 	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
 		SimpleMailMessage sm = new SimpleMailMessage();
-		sm.setText(obj.getCliente().getEmail());
+		sm.setTo(obj.getCliente().getEmail());
 		sm.setFrom(sender);
 		sm.setSubject("Pedido Confirmado! Número do Pedido: " + obj.getId());
 		sm.setSentDate(new Date(System.currentTimeMillis()));

@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -30,6 +31,8 @@ import com.matheus.f.n.pereira.cursomc.repositories.ItemPedidoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.PagamentoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.PedidoRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.ProdutoRepository;
+import com.matheus.f.n.pereira.cursomc.services.EmailService;
+import com.matheus.f.n.pereira.cursomc.services.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -61,6 +64,11 @@ public class DevConfig implements CommandLineRunner {
 
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -125,7 +133,7 @@ public class DevConfig implements CommandLineRunner {
 
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOA_FISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "matheusfilipe1999@gmail.com", "36378912377", TipoCliente.PESSOA_FISICA);
 
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 

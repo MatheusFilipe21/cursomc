@@ -22,6 +22,7 @@ import com.matheus.f.n.pereira.cursomc.entities.PagamentoComCartao;
 import com.matheus.f.n.pereira.cursomc.entities.Pedido;
 import com.matheus.f.n.pereira.cursomc.entities.Produto;
 import com.matheus.f.n.pereira.cursomc.entities.enums.EstadoPagamento;
+import com.matheus.f.n.pereira.cursomc.entities.enums.Perfil;
 import com.matheus.f.n.pereira.cursomc.entities.enums.TipoCliente;
 import com.matheus.f.n.pereira.cursomc.repositories.CategoriaRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.CidadeRepository;
@@ -138,8 +139,8 @@ public class DevConfig implements CommandLineRunner {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("123"));
-
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		cli1.addPerfil(Perfil.ADMIN);
 
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", c1, cli1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", c2, cli1);

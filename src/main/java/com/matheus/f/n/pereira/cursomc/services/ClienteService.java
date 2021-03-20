@@ -20,9 +20,12 @@ import com.matheus.f.n.pereira.cursomc.dto.ClienteNewDTO;
 import com.matheus.f.n.pereira.cursomc.entities.Cidade;
 import com.matheus.f.n.pereira.cursomc.entities.Cliente;
 import com.matheus.f.n.pereira.cursomc.entities.Endereco;
+import com.matheus.f.n.pereira.cursomc.entities.enums.Perfil;
 import com.matheus.f.n.pereira.cursomc.entities.enums.TipoCliente;
 import com.matheus.f.n.pereira.cursomc.repositories.ClienteRepository;
 import com.matheus.f.n.pereira.cursomc.repositories.EnderecoRepository;
+import com.matheus.f.n.pereira.cursomc.security.UserSpringSecurity;
+import com.matheus.f.n.pereira.cursomc.services.exceptions.AuthorizationException;
 import com.matheus.f.n.pereira.cursomc.services.exceptions.DatabaseException;
 import com.matheus.f.n.pereira.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -43,6 +46,12 @@ public class ClienteService {
 	}
 
 	public Cliente findById(Integer id) {
+		
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		Optional<Cliente> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(Cliente.class.getSimpleName(), id));
 	}

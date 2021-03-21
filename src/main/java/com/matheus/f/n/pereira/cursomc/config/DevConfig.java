@@ -138,7 +138,7 @@ public class DevConfig implements CommandLineRunner {
 
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("123"));
+		Cliente cli1 = new Cliente(null, "Maria Silva", "matheusfilipe1999@gmail.com", "36378912377", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		cli1.addPerfil(Perfil.ADMIN);
 
